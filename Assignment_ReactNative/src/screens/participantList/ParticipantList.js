@@ -6,6 +6,7 @@ import APIStrings from '../../api/APIStrings';
 import AppStrings from '../../utils/AppStrings';
 import LoaderComponent from '../../components/LoaderComponent/LoaderComponent';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class ParticipantList extends React.Component {
   constructor(props) {
@@ -17,13 +18,19 @@ class ParticipantList extends React.Component {
   }
 
   componentDidMount() {
+    //   Call Api
     this.callParticipantAPI();
   }
 
+//   Pull refresh
   onRefresh() {
     this.setState({isLoading: true}, () => {
       this.callParticipantAPI();
     });
+  }
+
+  saveData = async () => {
+    await AsyncStorage.setItem('ParticipantData', JSON.stringify(responseJson))
   }
 
   callParticipantAPI = async () => {
@@ -39,7 +46,9 @@ class ParticipantList extends React.Component {
       let responseJson = await response.json();
       this.setState({isLoading: false});
       if (responseJson.length > 0) {
-        this.setState({participantList: responseJson});
+        this.setState({participantList: responseJson}, () => {
+            this.saveData();
+        });
       }
     } catch (error) {
       this.setState({
@@ -59,24 +68,14 @@ class ParticipantList extends React.Component {
     return (
       <TouchableOpacity onPress={() => this.goToParticipantDetail(item)}>
         <View
-          style={{
-            marginVertical: 10,
-            marginHorizontal: 20,
-            borderRadius: 10,
-            backgroundColor: 'white',
-            shadowOffset: {width: 0, height: 5},
-            shadowColor: 'grey',
-            shadowOpacity: 0.5,
-            shadowRadius: 0,
-            elevation: 3,
-          }}>
-          <View style={{marginHorizontal: 20, marginVertical: 10}}>
-            <Text style={{fontSize: 16}}>
-              <Text style={{fontWeight: 'bold', fontSize: 18}}>Name: </Text>
+          style={ParticipantStyles.participantView}>
+          <View style={ParticipantStyles.participantView2}>
+            <Text style={ParticipantStyles.participantInfoText1}>
+              <Text style={ParticipantStyles.participantInfoText2}>Name: </Text>
               {item.name}
             </Text>
-            <Text style={{fontSize: 16}}>
-              <Text style={{fontWeight: 'bold', fontSize: 18}}>Locality: </Text>
+            <Text style={ParticipantStyles.participantInfoText1}>
+              <Text style={ParticipantStyles.participantInfoText2}>Locality: </Text>
               {item.locality}
             </Text>
           </View>

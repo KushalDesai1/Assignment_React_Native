@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, FlatList, Text} from 'react-native';
+import {View, Text} from 'react-native';
 import HeaderComponent from '../../components/HeaderComponent/HeaderComponent';
 import {ParticipantStyles} from './ParticipantStyle';
 
@@ -31,17 +31,8 @@ class ParticipantDetails extends React.Component {
       <View style={ParticipantStyles.rootViewContainer}>
         <HeaderComponent title="Participant Details" />
         <View
-          style={{
-            margin: 20,
-            borderRadius: 20,
-            backgroundColor: 'white',
-            shadowOffset: {width: 0, height: 5},
-            shadowColor: 'grey',
-            shadowOpacity: 0.5,
-            shadowRadius: 0,
-            elevation: 3,
-          }}>
-          <View style={{marginHorizontal: 20, marginVertical: 10}}>
+          style={ParticipantStyles.participantView}>
+          <View style={ParticipantStyles.participantView2}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={{fontSize: 20, fontWeight: 'bold'}}>
