@@ -1,28 +1,20 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, Modal, ActivityIndicator, BackHandler
+  View, ActivityIndicator,
 } from 'react-native';
 import LoaderStyles from './LoaderStyles'
 
 const LoaderComponent = props => {
 
-  const { loading,
-    ...attributes
-  } = props;
-
-
+  const {loading} = props;
   return (
-    <Modal
-      transparent={true}
-      animationType={'none'}
-      visible={loading}
-      onRequestClose={() => { console.log('close modal') }}>
-      <View style={LoaderStyles.modalBackground}>
-        <View style={LoaderStyles.activityIndicatorWrapper}>
-          <ActivityIndicator size={30} animating={loading} />
-        </View>
-      </View>
-    </Modal>
+    <View style = {LoaderStyles.container}>
+            <ActivityIndicator
+               animating = {loading}
+               color = '#bc2b78'
+               size = "large"
+               style = {LoaderStyles.activityIndicator}/>
+         </View>
   )
 }
 

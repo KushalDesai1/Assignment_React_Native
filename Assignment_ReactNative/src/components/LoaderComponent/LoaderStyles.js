@@ -2,22 +2,17 @@ import { StyleSheet } from 'react-native';
 import {AppColors} from '../../utils/AppColors';
 
 const LoaderStyles = StyleSheet.create({
-    modalBackground: {
+    container: {
         flex: 1,
+        justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        backgroundColor: '#00000040'
-      },
-      activityIndicatorWrapper: {
-        backgroundColor: AppColors.white,
-        height: 100,
-        width: 100,
-        borderRadius: 10,
-        display: 'flex',
+        marginTop: 70
+     },
+     activityIndicator: {
+        justifyContent: 'center',
         alignItems: 'center',
-        justifyContent: 'space-around'
-      }
+        height: 80
+     }
 });
 
-export {LoaderStyles}
+export default LoaderStyles;

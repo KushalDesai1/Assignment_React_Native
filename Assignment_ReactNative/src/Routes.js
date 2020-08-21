@@ -9,13 +9,25 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import Registration from './screens/registration/Registration';
 import ParticipantList from './screens/participantList/ParticipantList';
+import ParticipantDetails from './screens/participantList/ParticipantDetails';
 import Charts from './screens/charts/Charts';
 import {AppColors} from './utils/AppColors';
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+
+function ParticipantScreen({navigation}) {
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen name="ParticipantList" component={ParticipantList} />
+      <Stack.Screen name="ParticipantDetails" component={ParticipantDetails} />
+    </Stack.Navigator>
+  );
+}
 
 const Routes = () => {
   return (
@@ -26,7 +38,7 @@ const Routes = () => {
           activeTintColor: AppColors.drawerActiveTintColor,
         }}>
         <Drawer.Screen name="Registration" component={Registration} />
-        <Drawer.Screen name="Participants" component={ParticipantList} />
+        <Drawer.Screen name="Participants" component={ParticipantScreen} />
         <Drawer.Screen name="Charts" component={Charts} />
       </Drawer.Navigator>
     </NavigationContainer>

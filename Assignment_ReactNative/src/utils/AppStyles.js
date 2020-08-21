@@ -1,7 +1,7 @@
 const AppStyles = {
     rootViewContainer:{
         flex: 1
-    }
+    },
 }
 
-export {AppStyles}
+export default AppStyles;
