@@ -39,7 +39,7 @@ const Routes = () => {
         }}>
         <Drawer.Screen name="Registration" component={Registration} />
         <Drawer.Screen name="Participants" component={ParticipantScreen} />
-        <Drawer.Screen name="Charts" component={Charts} />
+        <Drawer.Screen name="Reports" component={Charts} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

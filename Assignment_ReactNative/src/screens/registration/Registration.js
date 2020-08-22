@@ -1,11 +1,14 @@
 import React from 'react';
-import {View, TextInput, Text, ScrollView, Image} from 'react-native';
+import {View, TextInput, Text, ScrollView, Modal} from 'react-native';
 import HeaderComponent from '../../components/HeaderComponent/HeaderComponent';
 import {RegistrationStyles} from './RegistrationStyle';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Picker} from '@react-native-community/picker';
 import DatePicker from 'react-native-datepicker';
 import {AppColors} from '../../utils/AppColors';
+import APIStrings from '../../api/APIStrings';
+import AppStrings from '../../utils/AppStrings';
+import LoaderComponent from '../../components/LoaderComponent/LoaderComponent';
 
 class Registration extends React.Component {
   constructor(props) {
@@ -18,6 +21,7 @@ class Registration extends React.Component {
       locality: '',
       guestsCount: 0,
       address: '',
+      isLoading: false,
     };
   }
 
@@ -97,7 +101,7 @@ class Registration extends React.Component {
           }}>
           Select Profession
         </Text>
-        <View style={RegistrationStyles.inputStyle}>
+        <View style={[RegistrationStyles.inputStyle, {paddingLeft: 5}]}>
           <Picker
             mode="dropdown"
             selectedValue={this.state.profession}
@@ -172,28 +176,68 @@ class Registration extends React.Component {
     }
   };
 
-  submitParticipantData = () => {
+  validateData = () => {
     if (!this.validateEmptyField(this.state.name)) {
       alert('Name cannot be empty');
-      return null;
     } else if (!this.validateName(this.state.name)) {
       alert('Please enter a valid name.');
-      return null;
     } else if (!this.validateEmptyField(this.state.age)) {
       alert('Age cannot be empty');
-      return null;
+    } else if (parseInt(this.state.age) < 15 && parseInt(this.state.age) > 40) {
+      alert('Your age should be above 15 & below 40 years.');
     } else if (!this.validateEmptyField(this.state.locality)) {
       alert('Locality cannot be empty');
-      return null;
     } else if (!this.validateEmptyField(this.state.address)) {
       alert('Address cannot be empty');
-      return null;
+    } else {
+      this.submitParticipantData();
+    }
+  };
+
+  clearFormData = () => {
+    this.setState({
+      name: '',
+      age: '',
+      dob: '01-01-1990',
+      locality: '',
+      guestsCount: 0,
+      address: '',
+    });
+  };
+
+  submitParticipantData = async () => {
+    this.setState({isLoading: true});
+    try {
+      const response = await fetch(APIStrings.submitParticipant, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: this.state.name,
+        }),
+      });
+
+      let responseJson = await response.json();
+      this.setState({isLoading: false});
+      if (responseJson.status === 200) {
+        alert(responseJson.message);
+        this.clearFormData();
+      } else {
+        alert(AppStrings.apiError);
+      }
+    } catch (error) {
+      this.setState({
+        isLoading: false,
+      });
+      alert(AppStrings.apiError);
     }
   };
 
   renderSubmitButton = () => {
     return (
-      <TouchableOpacity onPress={() => this.submitParticipantData()}>
+      <TouchableOpacity onPress={() => this.validateData()}>
         <View
           style={[
             RegistrationStyles.inputStyle,
@@ -225,6 +269,14 @@ class Registration extends React.Component {
     return (
       <View style={RegistrationStyles.rootViewContainer}>
         <HeaderComponent title="Registration" />
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.isLoading}
+          onRequestClose={() => {}}>
+          <LoaderComponent loading={this.state.isLoading} />
+        </Modal>
+
         <View style={{marginHorizontal: 20, marginTop: 10}}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <TextInput

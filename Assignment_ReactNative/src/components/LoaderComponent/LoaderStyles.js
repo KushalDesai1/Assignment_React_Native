@@ -6,7 +6,7 @@ const LoaderStyles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 70
+        marginTop: 70,
      },
      activityIndicator: {
         justifyContent: 'center',
