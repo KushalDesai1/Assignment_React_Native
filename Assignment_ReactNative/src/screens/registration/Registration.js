@@ -152,9 +152,44 @@ class Registration extends React.Component {
     );
   };
 
+  validateName = (text) => {
+    let reg = /^[a-zA-Z ]+$/;
+
+    if (reg.test(text) == false) {
+      // Invalid name
+      return false;
+    } else {
+      // Correct name
+      return true;
+    }
+  };
+
+  validateEmptyField = (text) => {
+    if (text === '') {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   submitParticipantData = () => {
-      
-  }
+    if (!this.validateEmptyField(this.state.name)) {
+      alert('Name cannot be empty');
+      return null;
+    } else if (!this.validateName(this.state.name)) {
+      alert('Please enter a valid name.');
+      return null;
+    } else if (!this.validateEmptyField(this.state.age)) {
+      alert('Age cannot be empty');
+      return null;
+    } else if (!this.validateEmptyField(this.state.locality)) {
+      alert('Locality cannot be empty');
+      return null;
+    } else if (!this.validateEmptyField(this.state.address)) {
+      alert('Address cannot be empty');
+      return null;
+    }
+  };
 
   renderSubmitButton = () => {
     return (
