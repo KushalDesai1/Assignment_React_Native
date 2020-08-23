@@ -27,13 +27,13 @@ const ParticipantStyles = {
     fontSize: 18,
   },
   noDataView: {
+    flex:1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   noDataText: {
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: 'bold',
-    color: '',
   },
 };
 
