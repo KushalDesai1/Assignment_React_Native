@@ -26,10 +26,17 @@ class ParticipantDetails extends React.Component {
     );
   };
 
+  handleBackButton = () => {
+    this.props.navigation.goBack()
+  }
+  
+
   render() {
     return (
       <View style={ParticipantStyles.rootViewContainer}>
-        <HeaderComponent title="Participant Details" />
+        <HeaderComponent title="Participant Details" 
+        back={true}
+        handleBackButton={() => this.handleBackButton()}/>
         <View
           style={ParticipantStyles.participantView}>
           <View style={ParticipantStyles.participantView2}>

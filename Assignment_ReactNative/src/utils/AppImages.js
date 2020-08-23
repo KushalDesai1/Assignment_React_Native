@@ -1,2 +1,5 @@
-export default AppImages = {
+const AppImages = {
+    menu: require('../assets/images/menu.png')
 }
+
+export default AppImages;

@@ -7,6 +7,7 @@ import AppStrings from '../../utils/AppStrings';
 import LoaderComponent from '../../components/LoaderComponent/LoaderComponent';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
+import {DrawerActions} from '@react-navigation/native';
 
 class ParticipantList extends React.Component {
   constructor(props) {
@@ -84,10 +85,15 @@ class ParticipantList extends React.Component {
     );
   };
 
+  toggleDrawer = () => {
+    this.props.navigation.dispatch(DrawerActions.openDrawer());
+  };
+
   render() {
     return (
       <View style={ParticipantStyles.rootViewContainer}>
-        <HeaderComponent title="Participants" />
+        <HeaderComponent title="Participants" menu={true}
+          handleDrawer={() => this.toggleDrawer()}/>
         {this.state.isLoading ? (
           <LoaderComponent loading={this.state.isLoading} />
         ) : this.state.participantList.length === 0 ? (

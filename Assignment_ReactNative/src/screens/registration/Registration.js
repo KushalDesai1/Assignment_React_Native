@@ -9,6 +9,7 @@ import {AppColors} from '../../utils/AppColors';
 import APIStrings from '../../api/APIStrings';
 import AppStrings from '../../utils/AppStrings';
 import LoaderComponent from '../../components/LoaderComponent/LoaderComponent';
+import {DrawerActions} from '@react-navigation/native';
 
 class Registration extends React.Component {
   constructor(props) {
@@ -265,10 +266,15 @@ class Registration extends React.Component {
     });
   };
 
+  toggleDrawer = () => {
+    this.props.navigation.dispatch(DrawerActions.openDrawer());
+  };
+
   render() {
     return (
       <View style={RegistrationStyles.rootViewContainer}>
-        <HeaderComponent title="Registration" />
+        <HeaderComponent title="Registration" menu={true}
+          handleDrawer={() => this.toggleDrawer()}/>
         <Modal
           animationType="slide"
           transparent={false}

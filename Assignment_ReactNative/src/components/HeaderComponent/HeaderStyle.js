@@ -3,7 +3,8 @@ import {AppColors} from '../../utils/AppColors';
 
 const HeaderStyle = StyleSheet.create({
     container: {
-        justifyContent: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%', 
         height: '8%',
